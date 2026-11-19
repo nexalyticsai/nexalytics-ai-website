@@ -13,7 +13,6 @@ let lastFormSubmitTs = 0;
 export function sanitizeText(str: string, maxLen = 1000): string {
   return String(str || "")
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-    .replace(/<\s*\/?\s*(script|iframe|object|embed|svg|style)[^>]*>|on\w+\s*=/gi, "")
     .trim()
     .slice(0, maxLen);
 }
@@ -25,8 +24,16 @@ export function isValidEmail(email: string): boolean {
 export function isSafeUrlOrRepo(raw: string): boolean {
   const t = raw.trim();
   if (!t || t.length < 4 || t.length > 500) return false;
-  if (/^(javascript|data|vbscript|file):/i.test(t)) return false;
-  if (/^https?:\/\//i.test(t)) {
+  const lower = t.toLowerCase();
+  if (
+    lower.startsWith("javascript:") ||
+    lower.startsWith("data:") ||
+    lower.startsWith("vbscript:") ||
+    lower.startsWith("file:")
+  ) {
+    return false;
+  }
+  if (lower.startsWith("https://") || lower.startsWith("http://")) {
     try {
       const u = new URL(t);
       return u.protocol === "https:" || u.protocol === "http:";
