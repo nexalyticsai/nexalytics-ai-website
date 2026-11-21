@@ -1918,8 +1918,8 @@
     // Ingress Modal & Contact Hub
     let activeIngressTier = "Autonomous Data Analytics ($499)";
     function openIngressModal(tier) {
-      activeIngressTier = tier;
-      document.getElementById("ingressTierDisplay").value = tier;
+      activeIngressTier = tier || "Autonomous Data Analytics ($499)";
+      document.getElementById("ingressTierDisplay").value = activeIngressTier;
       document.getElementById("ingressModalTitle").innerText = "Authorize: " + tier.split(" (")[0];
       document.getElementById("ingressErrorBox").classList.add("hidden");
       document.getElementById("ingressModal").classList.remove("hidden");
@@ -2015,10 +2015,26 @@
 
     function selectSprintOption(optionValue) {
       const sel = document.getElementById("serviceSelectDropdown");
-      if (sel) sel.value = optionValue;
+      if (sel) {
+        if (!Array.from(sel.options).some((opt) => opt.value === optionValue)) {
+          const customOpt = document.createElement("option");
+          customOpt.value = optionValue;
+          customOpt.text = optionValue;
+          sel.add(customOpt);
+        }
+        sel.value = optionValue;
+      }
       syncTimelineWithService(optionValue);
+      const targetHash = optionValue === "Complimentary 24h Staging Benchmark" ? "#free-audit" : "#inquiry";
+      try {
+        history.replaceState(null, "", targetHash);
+      } catch {
+        window.location.hash = targetHash;
+      }
       const contactSection = document.getElementById("inquiry");
       if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
+      const nameInput = document.getElementById("inquiryName");
+      if (nameInput) nameInput.focus({ preventScroll: true });
     }
 
     async function handleContactSubmit(e) {
