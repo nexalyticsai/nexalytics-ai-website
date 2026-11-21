@@ -234,6 +234,7 @@
         <a href="#roi-calculator" class="text-gray-300 hover:text-brandNeon transition">ROI Calc</a>
         <a href="#pricing" class="text-gray-300 hover:text-brandNeon transition">Pricing</a>
         <a href="#faq" class="text-gray-300 hover:text-brandNeon transition">FAQ</a>
+        <a href="#inquiry" class="text-gray-300 hover:text-brandNeon transition">Inquiry</a>
         <a href="https://shine-rayon-459.notion.site/Nexalytics-AI-Architecture-7-Day-POC-Hub-3e6b247e791b80eaa94ef0f426086dac?source=copy_link" target="_blank" rel="noopener noreferrer"
            class="text-brandNeon hover:underline flex items-center gap-1 transition text-[11px] font-mono px-2.5 py-1 rounded-md bg-brandNeon/10 border border-brandNeon/30 whitespace-nowrap">
           <span>POC Hub ↗</span>
@@ -276,7 +277,7 @@
         <a href="#roi-calculator" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">ROI Calculator</a>
         <a href="#pricing" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Pricing</a>
         <a href="#about" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Founder & Protocol</a>
-        <a href="#contact" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Inquiry Hub</a>
+        <a href="#inquiry" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Inquiry Hub</a>
       </div>
       <div class="grid grid-cols-2 gap-2 pt-2 border-t border-white/10">
         <button type="button" onclick="toggleMobileMenu(false); openIngressModal('Autonomous Data Analytics ($499)')"
@@ -512,7 +513,7 @@
 
       <div class="flex flex-wrap items-center justify-between gap-4 pt-2 text-xs font-mono text-slate-300">
         <span>💬 Need instant pre-purchase answers? Use the 24/7 AI Concierge widget (90+ languages) in the bottom-right corner.</span>
-        <a href="#contact" class="text-brandNeon hover:underline font-semibold">Or submit technical specs asynchronously →</a>
+        <a href="#inquiry" class="text-brandNeon hover:underline font-semibold">Or submit technical specs asynchronously →</a>
       </div>
     </div>
   </section>
@@ -1311,8 +1312,8 @@
     </div>
   </section>
 
-  <!-- CONTACT & ENGAGEMENT FORM -->
-  <section id="contact" class="py-24 relative z-10 scroll-mt-20">
+  <!-- INQUIRY FORM -->
+  <section id="inquiry" class="py-24 relative z-10 scroll-mt-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       <div class="text-center space-y-3">
         <span class="text-xs font-mono text-brandNeon uppercase tracking-widest">Initialization</span>
@@ -1372,7 +1373,7 @@
 
         <div class="card-depth-content">
           <label for="serviceSelectDropdown" class="block text-xs font-mono uppercase text-gray-300 mb-2">Which sprint do you need? *</label>
-          <select id="serviceSelectDropdown" required class="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm">
+          <select id="serviceSelectDropdown" onchange="syncTimelineWithService(this.value)" required class="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm">
             <option value="Autonomous Data Analytics ($499)">Autonomous Data Analytics ($499)</option>
             <option value="Generative UI/UX System ($999)">Generative UI/UX System ($999)</option>
             <option value="AI Agent Evaluation Suite ($1,499)">AI Agent Evaluation Suite ($1,499)</option>
@@ -1843,6 +1844,17 @@
       } catch {}
 
       void logVisitorTelemetry("/#sandbox-lead", email, `SANDBOX_LEAD:${ticket.ticketId}`);
+      void logClientIntake({
+        ticket_id: ticket.ticketId,
+        full_name: "Sandbox Audit Lead",
+        email: email,
+        contact_handle: "Live AST Sandbox",
+        repo_or_url: ticket.repoOrUrl,
+        service_tier: ticket.tier,
+        delivery_timeline: "Complimentary 24h Dry-Run",
+        project_details: sanitizeText(document.getElementById("sandboxInput").value, 1000),
+        status: ticket.status
+      });
       showTicketBanner(ticket);
 
       document.getElementById("sandboxReceiptFormRow").classList.add("hidden");
@@ -1969,6 +1981,17 @@
       } catch {}
 
       void logVisitorTelemetry("/#ingress-modal", email, `INGRESS_TICKET:${ticket.ticketId}`);
+      void logClientIntake({
+        ticket_id: ticket.ticketId,
+        full_name: "Ingress Modal Lead",
+        email: email,
+        contact_handle: "Self-Serve Pricing Modal",
+        repo_or_url: repo,
+        service_tier: activeIngressTier,
+        delivery_timeline: "Autonomous Sprint",
+        project_details: "Initialized via Self-Serve Pricing Ingress Modal",
+        status: ticket.status
+      });
       showTicketBanner(ticket);
       window.open(RAZORPAY_URL, "_blank", "noopener,noreferrer");
 
@@ -1977,14 +2000,24 @@
       closeIngressModal();
     }
 
+    function syncTimelineWithService(optionValue) {
+      let targetTimeline = "Autonomous Sprint (48–72 Hours)";
+      if (optionValue === "Complimentary 24h Staging Benchmark") {
+        targetTimeline = "Complimentary 24h Dry-Run";
+      } else if (optionValue.includes("Evaluation Suite")) {
+        targetTimeline = "Agent Evaluation Sprint (5 Days)";
+      } else if (optionValue.includes("Full-Stack AI MVP")) {
+        targetTimeline = "Full-Stack Build (7 Days)";
+      }
+      const radio = document.querySelector(`input[name="Delivery Timeline"][value="${targetTimeline}"]`);
+      if (radio) radio.checked = true;
+    }
+
     function selectSprintOption(optionValue) {
       const sel = document.getElementById("serviceSelectDropdown");
       if (sel) sel.value = optionValue;
-      if (optionValue === "Complimentary 24h Staging Benchmark") {
-        const dryRadio = document.querySelector('input[name="Delivery Timeline"][value="Complimentary 24h Dry-Run"]');
-        if (dryRadio) dryRadio.checked = true;
-      }
-      const contactSection = document.getElementById("contact");
+      syncTimelineWithService(optionValue);
+      const contactSection = document.getElementById("inquiry");
       if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
     }
 
@@ -2059,6 +2092,17 @@
       } catch {}
 
       void logVisitorTelemetry("/#contact-lead", email, `INQUIRY_TICKET:${ticket.ticketId}`);
+      void logClientIntake({
+        ticket_id: ticket.ticketId,
+        full_name: fullName,
+        email: email,
+        contact_handle: contactNo || "Async Email Only",
+        repo_or_url: ticket.repoOrUrl,
+        service_tier: service,
+        delivery_timeline: timeline,
+        project_details: details,
+        status: ticket.status
+      });
       showTicketBanner(ticket);
 
       document.getElementById("clientInquiryForm").classList.add("hidden");
@@ -2110,9 +2154,27 @@
       if (window.location.hash === "#data-deletion") toggleModal("dataDeletionModal", true);
       if (window.location.hash === "#work") document.getElementById("benchmarks")?.scrollIntoView({ behavior: "smooth" });
       if (window.location.hash === "#outcomes") document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
+      if (window.location.hash === "#inquiry") document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth" });
+      if (window.location.hash === "#free-audit") selectSprintOption("Complimentary 24h Staging Benchmark");
     }
     window.addEventListener("load", handleHashModal);
     window.addEventListener("hashchange", handleHashModal);
+
+    async function logClientIntake(record) {
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/client_intake`, {
+          method: "POST",
+          keepalive: true,
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal"
+          },
+          body: JSON.stringify(record)
+        });
+      } catch {}
+    }
 
     async function logVisitorTelemetry(pathOverride, leadEmailOverride, eventTag) {
       try {
