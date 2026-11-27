@@ -1,8 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
+  const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | "deletion" | null>(null);
+
+  useEffect(() => {
+    if (!activeLegalModal) return;
+    document.body.style.overflow = "hidden";
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveLegalModal(null);
+    };
+    window.addEventListener("keydown", onEsc);
+    return () => {
+      window.removeEventListener("keydown", onEsc);
+      document.body.style.overflow = "";
+    };
+  }, [activeLegalModal]);
+
   useEffect(() => {
     const RAZORPAY_URL = "https://pages.razorpay.com/nexalyticsai";
 
@@ -658,6 +673,18 @@ export default function HomePage() {
     };
 
     w.toggleModal = (modalId: string, show: boolean) => {
+      if (modalId === "privacyModal") {
+        setActiveLegalModal(show ? "privacy" : null);
+        return;
+      }
+      if (modalId === "termsModal") {
+        setActiveLegalModal(show ? "terms" : null);
+        return;
+      }
+      if (modalId === "dataDeletionModal") {
+        setActiveLegalModal(show ? "deletion" : null);
+        return;
+      }
       const modal = document.getElementById(modalId);
       if (!modal) return;
       modal.classList.toggle("hidden", !show);
@@ -701,31 +728,19 @@ export default function HomePage() {
       }
     };
 
-    const openLegalModal = (id: "privacyModal" | "termsModal" | "dataDeletionModal") => {
-      document.getElementById(id)?.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-    };
-
-    const closeLegalModal = (id: "privacyModal" | "termsModal" | "dataDeletionModal") => {
-      document.getElementById(id)?.classList.add("hidden");
-      document.body.style.overflow = "";
-    };
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         w.closeIngressModal();
-        closeLegalModal("privacyModal");
-        closeLegalModal("termsModal");
-        closeLegalModal("dataDeletionModal");
+        setActiveLegalModal(null);
         w.toggleMobileMenu(false);
       }
     };
     document.addEventListener("keydown", onKeyDown);
 
     const handleHashModal = () => {
-      if (window.location.hash === "#privacy") openLegalModal("privacyModal");
-      if (window.location.hash === "#terms") openLegalModal("termsModal");
-      if (window.location.hash === "#data-deletion") openLegalModal("dataDeletionModal");
+      if (window.location.hash === "#privacy") setActiveLegalModal("privacy");
+      if (window.location.hash === "#terms") setActiveLegalModal("terms");
+      if (window.location.hash === "#data-deletion") setActiveLegalModal("deletion");
       if (window.location.hash === "#work") document.getElementById("benchmarks")?.scrollIntoView({ behavior: "smooth" });
       if (window.location.hash === "#outcomes") document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
       if (window.location.hash === "#inquiry") document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth" });
@@ -809,7 +824,6 @@ export default function HomePage() {
     };
     window.addEventListener("mousemove", onMouseMove, { passive: true });
 
-    // Apply tilt only on selective high-value focal cards, not everywhere
     const initTilt = () => {
       if (w.VanillaTilt) {
         w.VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
@@ -2139,7 +2153,7 @@ export default function HomePage() {
           <li>
             <button
               type="button"
-              onClick={() => openLegalModal("privacyModal")}
+              onClick={() => setActiveLegalModal("privacy")}
               className="hover:text-brandNeon transition text-left cursor-pointer"
             >
               Privacy Policy
@@ -2148,7 +2162,7 @@ export default function HomePage() {
           <li>
             <button
               type="button"
-              onClick={() => openLegalModal("termsModal")}
+              onClick={() => setActiveLegalModal("terms")}
               className="hover:text-brandNeon transition text-left cursor-pointer"
             >
               Terms of Service
@@ -2164,7 +2178,7 @@ export default function HomePage() {
         <div className="flex items-center gap-4 text-xs text-gray-400">
           <button
             type="button"
-            onClick={() => openLegalModal("privacyModal")}
+            onClick={() => setActiveLegalModal("privacy")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             Privacy Policy
@@ -2172,7 +2186,7 @@ export default function HomePage() {
           <span>•</span>
           <button
             type="button"
-            onClick={() => openLegalModal("termsModal")}
+            onClick={() => setActiveLegalModal("terms")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             Terms of Service
@@ -2180,7 +2194,7 @@ export default function HomePage() {
           <span>•</span>
           <button
             type="button"
-            onClick={() => openLegalModal("dataDeletionModal")}
+            onClick={() => setActiveLegalModal("deletion")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             User Data Deletion
@@ -2224,120 +2238,77 @@ export default function HomePage() {
     </div>
   </div>
 
-  <div
-    id="privacyModal"
-    onClick={(e) => {
-      if (e.target === e.currentTarget) closeLegalModal("privacyModal");
-    }}
-    className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
-  >
-    <div className="bg-[#02242e]/95 border border-brandNeon/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <div>
-          <span className="text-[10px] font-mono text-brandNeon uppercase tracking-widest">Legal Governance</span>
-          <h3 className="text-xl font-bold text-white mt-0.5">Privacy Policy</h3>
+  {activeLegalModal && (
+    <div
+      id={activeLegalModal === "privacy" ? "privacyModal" : activeLegalModal === "terms" ? "termsModal" : "dataDeletionModal"}
+      role="dialog"
+      aria-modal="true"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) setActiveLegalModal(null);
+      }}
+      className="fixed inset-0 z-[999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
+    >
+      <div className="bg-[#02242e] border border-brandNeon/40 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-200 text-xs sm:text-sm shadow-2xl">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div>
+            <span className="text-[10px] font-mono text-brandNeon uppercase tracking-widest">
+              {activeLegalModal === "deletion" ? "Compliance & User Rights" : "Legal Governance"}
+            </span>
+            <h3 className="text-xl font-bold text-white mt-0.5">
+              {activeLegalModal === "privacy" && "Privacy Policy"}
+              {activeLegalModal === "terms" && "Terms of Service"}
+              {activeLegalModal === "deletion" && "User Data Deletion Callback"}
+            </h3>
+          </div>
+          <button
+            type="button"
+            onClick={() => setActiveLegalModal(null)}
+            className="text-gray-300 hover:text-white text-2xl font-bold px-2 py-1 cursor-pointer"
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => closeLegalModal("privacyModal")}
-          className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
-        >
-          ✕
-        </button>
-      </div>
-      <div className="space-y-4 leading-relaxed">
-        <p><strong className="text-white">Effective Date:</strong> January 1, 2026</p>
-        <p><strong className="text-white">1. Overview:</strong> Nexalytics AI operates as an autonomous systems architecture and evaluation engineering lab. We respect client confidentiality and maintain zero unauthorized storage or cross-model training on proprietary codebase repositories.</p>
-        <p><strong className="text-white">2. Information Collection:</strong> When you submit requirements via our Staging &amp; Inquiry Hub or Sandbox Audit Receipt, we collect your name, business email, and technical specifications solely for delivery evaluation and automated proposal execution.</p>
-        <p><strong className="text-white">3. Third-Party Sandboxes &amp; Zero-Retention:</strong> Client evaluation suites, prompt schemas, and database staging endpoints are executed in deterministic, ephemeral sandboxes. We do not sell, rent, or leak your codebase or proprietary pipelines to third parties.</p>
-        <p><strong className="text-white">4. Direct Contact:</strong> Email us directly at <a href="mailto:nexalytics.ai@gmail.com" className="text-brandNeon underline font-mono">nexalytics.ai@gmail.com</a>.</p>
-      </div>
-      <div className="pt-4 border-t border-white/10 flex justify-end">
-        <button
-          type="button"
-          onClick={() => closeLegalModal("privacyModal")}
-          className="px-5 py-2 rounded-full bg-brandNeon text-black font-bold font-mono text-xs cursor-pointer"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <div
-    id="termsModal"
-    onClick={(e) => {
-      if (e.target === e.currentTarget) closeLegalModal("termsModal");
-    }}
-    className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
-  >
-    <div className="bg-[#02242e]/95 border border-brandOrange/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <div>
-          <span className="text-[10px] font-mono text-brandOrange uppercase tracking-widest">Legal Governance</span>
-          <h3 className="text-xl font-bold text-white mt-0.5">Terms of Service</h3>
-        </div>
-        <button
-          type="button"
-          onClick={() => closeLegalModal("termsModal")}
-          className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
-        >
-          ✕
-        </button>
-      </div>
-      <div className="space-y-4 leading-relaxed">
-        <p><strong className="text-white">Effective Date:</strong> January 1, 2026</p>
-        <p><strong className="text-white">1. Scope of Engagement:</strong> Nexalytics AI provides fixed-deliverable autonomous engineering sprints delivered 100% asynchronously without mandatory calls or meetings.</p>
-        <p><strong className="text-white">2. Intellectual Property (100% Handover):</strong> Upon full settlement of sprint invoices, all custom pipelines, source repositories, and visual assets belong entirely to the client.</p>
-        <p><strong className="text-white">3. Turnaround Windows:</strong> Stated turnaround windows (48h, 72h, 5-Day, 7-Day) commence once prerequisite schemas or repository access are provided.</p>
-      </div>
-      <div className="pt-4 border-t border-white/10 flex justify-end">
-        <button
-          type="button"
-          onClick={() => closeLegalModal("termsModal")}
-          className="px-5 py-2 rounded-full bg-brandOrange text-black font-bold font-mono text-xs cursor-pointer"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
+        {activeLegalModal === "privacy" && (
+          <div className="space-y-4 leading-relaxed text-gray-300">
+            <p><strong className="text-white">Effective Date:</strong> January 1, 2026</p>
+            <p><strong className="text-white">1. Overview:</strong> Nexalytics AI operates as an autonomous systems architecture and evaluation engineering lab. We respect client confidentiality and maintain zero unauthorized storage or cross-model training on proprietary codebase repositories.</p>
+            <p><strong className="text-white">2. Information Collection:</strong> When you submit requirements via our Staging &amp; Inquiry Hub or Sandbox Audit Receipt, we collect your name, business email, optional async handle, target repo/staging URL, and technical specifications solely for delivery evaluation, ticket tracking, and automated proposal execution.</p>
+            <p><strong className="text-white">3. Isolated Sandboxes &amp; Zero-Retention:</strong> Client evaluation suites, prompt schemas, and database staging endpoints are executed in deterministic, ephemeral sandboxes. Clients should only share sanitized JSON/SQL samples or staging endpoints—never raw customer PII or live production secrets. We do not sell, rent, or leak your codebase or proprietary pipelines to third parties.</p>
+            <p><strong className="text-white">4. Direct Async Contact:</strong> For privacy questions or record requests, email us directly at <a href="mailto:nexalytics.ai@gmail.com" className="text-brandNeon underline font-mono">nexalytics.ai@gmail.com</a>.</p>
+          </div>
+        )}
 
-  <div
-    id="dataDeletionModal"
-    onClick={(e) => {
-      if (e.target === e.currentTarget) closeLegalModal("dataDeletionModal");
-    }}
-    className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
-  >
-    <div className="bg-[#02242e]/95 border border-brandCyan/30 rounded-3xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <div>
-          <span className="text-[10px] font-mono text-brandCyan uppercase tracking-widest">Compliance & User Rights</span>
-          <h3 className="text-xl font-bold text-white mt-0.5">User Data Deletion Callback</h3>
+        {activeLegalModal === "terms" && (
+          <div className="space-y-4 leading-relaxed text-gray-300">
+            <p><strong className="text-white">Effective Date:</strong> January 1, 2026</p>
+            <p><strong className="text-white">1. Scope of Engagement:</strong> Nexalytics AI provides fixed-deliverable autonomous engineering sprints ($499–$1,999) and complimentary 24h dry-run staging audits delivered 100% asynchronously without mandatory calls or meetings.</p>
+            <p><strong className="text-white">2. Turnaround Windows:</strong> Stated turnaround windows (24h Dry-Run, 48h, 72h, 5-Day, 7-Day) commence once prerequisite sanitized schemas, sample payloads, or staging repository access are provided.</p>
+            <p><strong className="text-white">3. Intellectual Property (100% Handover):</strong> Upon full settlement of sprint invoices, all custom pipelines, source repositories, SQL/AST contracts, and visual/BI assets engineered for the sprint transfer 100% to the client with zero retainer lock-in.</p>
+            <p><strong className="text-white">4. Deployment &amp; Governance:</strong> Synthetic stress-testing and evaluation harnesses validate staging boundaries with high rigor; final production deployment and cloud access governance remain within the client&apos;s sovereign infrastructure.</p>
+          </div>
+        )}
+
+        {activeLegalModal === "deletion" && (
+          <div className="space-y-4 leading-relaxed text-gray-300">
+            <p>In accordance with GDPR and platform data rights, you may request complete deletion of any telemetry logs, ticket records (<code className="text-brandNeon">NX-...</code>), or inquiry history associated with your identity.</p>
+            <p><strong className="text-white">How to Request Deletion:</strong> Send an email to <a href="mailto:nexalytics.ai@gmail.com" className="text-brandCyan underline font-mono">nexalytics.ai@gmail.com</a> with the subject line <span className="text-brandNeon font-mono">&quot;Data Deletion Request&quot;</span> and include your submitted work email address or Ticket ID. All matching records will be purged within 24–48 business hours with confirmation.</p>
+          </div>
+        )}
+
+        <div className="pt-4 border-t border-white/10 flex justify-end">
+          <button
+            type="button"
+            onClick={() => setActiveLegalModal(null)}
+            className="px-5 py-2 rounded-full bg-brandNeon text-black font-bold font-mono text-xs cursor-pointer"
+          >
+            Close
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => closeLegalModal("dataDeletionModal")}
-          className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
-        >
-          ✕
-        </button>
-      </div>
-      <div className="space-y-4 leading-relaxed">
-        <p>You may request complete deletion of any telemetry logs or inquiry history associated with your email or Ticket ID (`NX-...`) by emailing <a href="mailto:nexalytics.ai@gmail.com" className="text-brandCyan underline">nexalytics.ai@gmail.com</a> with subject <span className="text-brandNeon">&quot;Data Deletion Request&quot;</span>.</p>
-      </div>
-      <div className="pt-4 border-t border-white/10 flex justify-end">
-        <button
-          type="button"
-          onClick={() => closeLegalModal("dataDeletionModal")}
-          className="px-5 py-2 rounded-full bg-brandCyan text-black font-bold font-mono text-xs cursor-pointer"
-        >
-          Close
-        </button>
       </div>
     </div>
-  </div>
+  )}
 
   <button id="backToTopBtn" onClick={(e) => { (window as any).handleClickExpr?.(e, "window.scrollTo({top: 0, behavior: 'smooth'})"); }}
           aria-label="Back to Top"
