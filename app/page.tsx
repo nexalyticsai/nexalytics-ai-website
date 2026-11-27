@@ -809,13 +809,14 @@ export default function HomePage() {
     };
     window.addEventListener("mousemove", onMouseMove, { passive: true });
 
+    // Apply tilt only on selective high-value focal cards, not everywhere
     const initTilt = () => {
       if (w.VanillaTilt) {
-        w.VanillaTilt.init(document.querySelectorAll(".glass-3d-card"), {
-          max: 8,
+        w.VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+          max: 6,
           speed: 400,
           glare: true,
-          "max-glare": 0.16
+          "max-glare": 0.12
         });
       }
     };
@@ -851,11 +852,9 @@ export default function HomePage() {
 <canvas id="neural-canvas" aria-hidden="true"></canvas>
   <div id="cursorGlow" aria-hidden="true"></div>
 
-
   <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[950px] h-[400px] bg-gradient-to-b from-brandNeon/15 via-cyan-500/10 to-transparent blur-[140px] pointer-events-none -z-10"></div>
   <div className="fixed top-1/3 -right-32 w-[450px] h-[450px] bg-cyan-600/12 blur-[130px] rounded-full pointer-events-none -z-10"></div>
   <div className="fixed top-2/3 -left-32 w-[450px] h-[450px] bg-brandGreen/12 blur-[130px] rounded-full pointer-events-none -z-10"></div>
-
 
   <header className="sticky top-0 z-50 bg-[#021a22]/95 backdrop-blur-xl shadow-lg border-b border-white/5">
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
@@ -869,7 +868,6 @@ export default function HomePage() {
           <span>99.98% Telemetry Active</span>
         </div>
       </div>
-
 
       <nav aria-label="Primary Navigation" className="hidden lg:flex items-center gap-3.5 text-xs font-medium ml-auto">
         <a href="#about" className="text-gray-300 hover:text-brandNeon transition">About</a>
@@ -902,7 +900,6 @@ export default function HomePage() {
         </a>
       </nav>
 
-
       <div className="flex lg:hidden items-center gap-2.5 shrink-0">
         <a href="https://pages.razorpay.com/nexalyticsai" target="_blank" rel="noopener noreferrer"
            className="hidden sm:inline-flex items-center gap-1 bg-brandOrange text-black font-extrabold px-3.5 py-1.5 rounded-full text-xs">
@@ -914,7 +911,6 @@ export default function HomePage() {
         </button>
       </div>
     </div>
-
 
     <div id="mobileNavDrawer" className="hidden lg:hidden absolute right-4 sm:right-6 top-[calc(100%+0.5rem)] w-[calc(100vw-2rem)] max-w-sm rounded-2xl bg-[#021922] border border-brandNeon/45 shadow-2xl p-4 space-y-3 z-50">
       <div className="flex items-center justify-between pb-2 border-b border-white/10">
@@ -944,7 +940,6 @@ export default function HomePage() {
     </div>
   </header>
 
-
   <div id="activeTicketBanner" className="hidden relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
     <div className="w-full rounded-2xl p-4 sm:p-5 bg-brandNeon/10 border border-brandNeon/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div className="space-y-1">
@@ -959,31 +954,30 @@ export default function HomePage() {
     </div>
   </div>
 
-
   <section className="relative min-h-[84vh] flex items-center overflow-hidden z-10 pt-4">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14 items-center">
       <div className="relative z-10">
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-brandGreen/10 border border-brandGreen/40 text-xs font-mono mb-6 text-brandNeon rounded-full backdrop-blur-md shadow-[0_0_20px_rgba(0,255,170,0.25)]">
           <span className="w-2 h-2 rounded-full bg-brandNeon animate-ping"></span>
-          <span>Autonomous Systems Architecture & LLM Runtime Guard Engine</span>
+          <span>Architect-Backed Autonomous Systems &amp; Global Runtime Guard</span>
         </div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.12] tracking-tight mb-6 gradient-headline drop-shadow-md">
-          Deterministic Schema Firewalls & Evaluation Harnesses for Production AI
+          Solving Global Data &amp; Agent Reliability Pain — Shipped Async
         </h1>
         <p className="text-lg text-gray-300 mb-8 leading-relaxed font-normal">
-          Nexalytics AI eliminates silent agent runtime failures by deploying deterministic AST schema contracts, automated prompt injection fuzzing, and telemetry-verified Next.js platforms in 48 to 72 hours — shipped 100% asynchronously with zero calls or WhatsApp friction.
+          Global engineering teams lose weeks to timezone delays, brittle data pipelines, schema drift, and silent agent tool failures. Nexalytics AI combines autonomous execution pipelines with senior systems engineering to ship verified schemas, evaluation harnesses, BI systems, and Next.js builds in 48 to 72 hours — 100% asynchronously with zero calls or WhatsApp friction.
         </p>
 
         <div className="flex flex-wrap gap-3.5 font-semibold text-sm mb-5">
-          <button type="button" onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('Autonomous Data Analytics ($499)')"); }}
-                  className="bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold px-6 py-3.5 rounded-full transition shadow-[0_0_25px_rgba(255,89,0,0.35)] hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer">
-            <span>Initialize Instant Staging Ingress</span>
-            <span className="font-mono text-xs">⚡</span>
-          </button>
           <button type="button" onClick={(e) => { (window as any).handleClickExpr?.(e, "selectSprintOption('Complimentary 24h Staging Benchmark')"); }}
-                  className="bg-brandNeon/15 hover:bg-brandNeon text-brandNeon hover:text-black border border-brandNeon/40 px-6 py-3.5 rounded-full backdrop-blur-md transition flex items-center gap-2 shadow-[0_0_20px_rgba(0,255,170,0.25)] hover:scale-105 cursor-pointer">
-            <span>Free 24h Dry-Run Audit</span>
+                  className="bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold px-6 py-3.5 rounded-full transition shadow-[0_0_25px_rgba(255,89,0,0.35)] hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer">
+            <span>Start Free 24h Dry-Run Audit</span>
             <span className="text-xs font-mono">→</span>
+          </button>
+          <button type="button" onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('Autonomous Data Analytics ($499)')"); }}
+                  className="bg-brandNeon/15 hover:bg-brandNeon text-brandNeon hover:text-black border border-brandNeon/40 px-6 py-3.5 rounded-full backdrop-blur-md transition flex items-center gap-2 shadow-[0_0_20px_rgba(0,255,170,0.25)] hover:scale-105 cursor-pointer">
+            <span>Initialize Instant Sprint ($499+)</span>
+            <span className="font-mono text-xs">⚡</span>
           </button>
           <a href="#sandbox"
              className="bg-white/10 hover:bg-white/20 text-white border border-white/25 px-6 py-3.5 rounded-full backdrop-blur-md transition flex items-center gap-2 hover:scale-105">
@@ -1009,18 +1003,17 @@ export default function HomePage() {
 
       <div className="relative w-full max-w-lg mx-auto flex items-center justify-center">
         <div className="absolute -inset-6 bg-gradient-to-tr from-brandNeon/30 via-cyan-500/25 to-transparent blur-3xl rounded-full -z-10 pointer-events-none"></div>
-        <div className="floating-hero-monitor w-full" data-tilt data-tilt-max="12">
+        <div className="floating-hero-monitor w-full" data-tilt data-tilt-max="8">
           <img src="https://rjdavx8ozyznxeyh.public.blob.vercel-storage.com/production/websites/infinite-images/03033985-b292-404d-9b46-a29543cbc69d-VNvOTD13eO3blcopE5CkK6gWTPxq2f.png"
                alt="AI Neural Network Visual"
-               className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] border border-brandNeon/40 p-2.5 glass-3d-card rounded-2xl shadow-[0_0_40px_rgba(0,255,170,0.25)]" />
+               className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] border border-brandNeon/40 p-2.5 rounded-2xl shadow-[0_0_40px_rgba(0,255,170,0.25)]" />
         </div>
       </div>
     </div>
   </section>
 
-
   <section id="sandbox" className="py-14 relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
-    <div className="glass-3d-card rounded-3xl p-5 sm:p-8 border-2 border-brandNeon/40 bg-[#011b22]/95 shadow-[0_0_50px_rgba(0,255,170,0.15)]">
+    <div className="rounded-3xl p-5 sm:p-8 border-2 border-brandNeon/40 bg-[#011b22]/95 shadow-[0_0_50px_rgba(0,255,170,0.15)]">
       <div className="pb-6 border-b border-white/10 space-y-5">
         <div>
           <p className="text-xs font-mono text-brandOrange font-semibold mb-1.5 uppercase tracking-wider">⚡ Interactive Public Sandbox Demo · Live AST Engine</p>
@@ -1080,7 +1073,6 @@ export default function HomePage() {
         </div>
       </div>
 
-
       <div className="mt-6 pt-5 border-t border-white/10">
         <div id="sandboxReceiptConfirmed" className="hidden flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-brandNeon/10 border border-brandNeon/40 text-xs font-mono">
           <div>
@@ -1112,7 +1104,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="async-protocol" className="py-14 relative z-10 border-y border-white/10 bg-[#01141b]/80 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
@@ -1126,7 +1117,7 @@ export default function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="glass-3d-card rounded-2xl p-5 flex flex-col justify-between border border-white/10">
+        <div className="rounded-2xl p-5 flex flex-col justify-between border border-white/10 bg-white/[0.03]">
           <div>
             <div className="text-xs font-mono text-brandNeon font-bold mb-2">Step 01</div>
             <h3 className="text-base font-bold text-white mb-2">Zero-Call Intake or Free 24h Dry-Run</h3>
@@ -1135,7 +1126,7 @@ export default function HomePage() {
           <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-slate-400">⏱ 2-Minute Self-Serve Intake</div>
         </div>
 
-        <div className="glass-3d-card rounded-2xl p-5 flex flex-col justify-between border border-white/10">
+        <div className="rounded-2xl p-5 flex flex-col justify-between border border-white/10 bg-white/[0.03]">
           <div>
             <div className="text-xs font-mono text-brandNeon font-bold mb-2">Step 02</div>
             <h3 className="text-base font-bold text-white mb-2">Instant Async Ticket &amp; Checkout</h3>
@@ -1144,7 +1135,7 @@ export default function HomePage() {
           <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-slate-400">✉ Instant Email &amp; Ticket ID</div>
         </div>
 
-        <div className="glass-3d-card rounded-2xl p-5 flex flex-col justify-between border border-white/10">
+        <div className="rounded-2xl p-5 flex flex-col justify-between border border-white/10 bg-white/[0.03]">
           <div>
             <div className="text-xs font-mono text-brandNeon font-bold mb-2">Step 03</div>
             <h3 className="text-base font-bold text-white mb-2">Isolated AST Sandbox Execution</h3>
@@ -1153,7 +1144,7 @@ export default function HomePage() {
           <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-slate-400">✓ Zero-PII Isolated Sandbox</div>
         </div>
 
-        <div className="glass-3d-card rounded-2xl p-5 flex flex-col justify-between border border-white/10">
+        <div className="rounded-2xl p-5 flex flex-col justify-between border border-white/10 bg-white/[0.03]">
           <div>
             <div className="text-xs font-mono text-brandNeon font-bold mb-2">Step 04</div>
             <h3 className="text-base font-bold text-white mb-2">Hardened PR &amp; 100% IP Handover</h3>
@@ -1170,55 +1161,53 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section className="bg-[#02141a]/90 py-9 relative z-10 backdrop-blur-md">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-6">Engineered With Enterprise Production Architecture</p>
       <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-cyan-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-cyan-400 hover:text-white transition">
           <i className="devicon-postgresql-plain text-2xl text-cyan-400"></i>
           <span className="text-xs font-mono font-semibold">PostgreSQL</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-emerald-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-emerald-400 hover:text-white transition">
           <i className="devicon-supabase-plain text-2xl text-emerald-400"></i>
           <span className="text-xs font-mono font-semibold">Supabase</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-yellow-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-yellow-400 hover:text-white transition">
           <i className="devicon-python-plain text-2xl text-yellow-400"></i>
           <span className="text-xs font-mono font-semibold">Python</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-teal-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-teal-400 hover:text-white transition">
           <i className="devicon-fastapi-plain text-2xl text-teal-400"></i>
           <span className="text-xs font-mono font-semibold">FastAPI</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-red-500 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-red-500 hover:text-white transition">
           <i className="devicon-redis-plain text-2xl text-red-500"></i>
           <span className="text-xs font-mono font-semibold">Redis</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-orange-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-orange-400 hover:text-white transition">
           <i className="devicon-pytorch-original text-2xl text-orange-400"></i>
           <span className="text-xs font-mono font-semibold">PyTorch</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-amber-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-amber-400 hover:text-white transition">
           <svg className="w-5 h-5 fill-amber-400" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
           <span className="text-xs font-mono font-semibold">Power BI</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-blue-400 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-blue-400 hover:text-white transition">
           <i className="devicon-docker-plain text-2xl text-blue-400"></i>
           <span className="text-xs font-mono font-semibold">Docker Cloud</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-brandNeon hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-brandNeon hover:text-white transition">
           <i className="devicon-nextjs-plain text-2xl text-white"></i>
           <span className="text-xs font-mono font-semibold">Next.js 14</span>
         </div>
-        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-blue-500 hover:text-white transition" data-tilt data-tilt-max="15">
+        <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:border-blue-500 hover:text-white transition">
           <i className="devicon-typescript-plain text-2xl text-blue-500"></i>
           <span className="text-xs font-mono font-semibold">TypeScript</span>
         </div>
       </div>
     </div>
   </section>
-
 
   <section id="services" className="py-24 relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1227,12 +1216,11 @@ export default function HomePage() {
           <span className="text-xs font-mono text-brandNeon uppercase tracking-widest">Capabilities</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold mt-1 text-white">We engineer verifiable outcomes, not billed hours.</h2>
         </div>
-        <p className="text-gray-400 text-sm max-w-md">Predictive data pipelines, design systems, evaluation harnesses, and full-stack software handled by autonomous execution engines.</p>
+        <p className="text-gray-400 text-sm max-w-md">Predictive data pipelines, design systems, evaluation harnesses, and full-stack software handled by autonomous execution engines with architect-led quality gates.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 items-stretch">
-
-        <div className="glass-3d-card p-5 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="8">
+        <div className="p-5 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="bg-brandNeon/15 border border-brandNeon/40 text-brandNeon text-[9px] font-mono font-bold px-2.5 py-1 rounded-full">MOST REQUESTED</span>
@@ -1280,8 +1268,7 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-5 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="8">
+        <div className="p-5 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="bg-brandOrange/15 border border-brandOrange/40 text-brandOrange text-[9px] font-mono font-bold px-2.5 py-1 rounded-full">FAST DELIVERY</span>
@@ -1318,8 +1305,7 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-5 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="8">
+        <div className="p-5 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="bg-purple-500/15 border border-purple-400/40 text-purple-300 text-[9px] font-mono font-bold px-2.5 py-1 rounded-full">EVALUATION HARNESS</span>
@@ -1355,8 +1341,7 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-5 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="8">
+        <div className="p-5 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="bg-cyan-400/15 border border-cyan-400/40 text-cyan-300 text-[9px] font-mono font-bold px-2.5 py-1 rounded-full">ENTERPRISE STACK</span>
@@ -1395,8 +1380,7 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-5 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="8">
+        <div className="p-5 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="bg-brandGreen/15 border border-brandGreen/40 text-brandGreen text-[9px] font-mono font-bold px-2.5 py-1 rounded-full">AUTONOMOUS AGENT</span>
@@ -1431,7 +1415,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="specs" className="py-24 relative z-10 bg-[#01141b]/95 border-y border-brandNeon/20 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
@@ -1447,7 +1430,7 @@ export default function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="6">
+        <div className="p-6 rounded-2xl flex flex-col justify-between bg-white/[0.03] border border-white/10">
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-brandNeon mb-4">
               <span>BLUEPRINT #01</span>
@@ -1473,7 +1456,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between border-t-2 border-t-purple-400" data-tilt data-tilt-max="6">
+        <div className="p-6 rounded-2xl flex flex-col justify-between border border-white/10 border-t-2 border-t-purple-400 bg-white/[0.03]">
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-purple-300 mb-4">
               <span>BLUEPRINT #02</span>
@@ -1499,7 +1482,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between border-t-2 border-t-brandOrange" data-tilt data-tilt-max="6">
+        <div className="p-6 rounded-2xl flex flex-col justify-between border border-white/10 border-t-2 border-t-brandOrange bg-white/[0.03]">
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-brandOrange mb-4">
               <span>BLUEPRINT #03</span>
@@ -1523,7 +1506,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="benchmarks" className="py-24 relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-3xl mx-auto mb-16">
@@ -1533,8 +1515,8 @@ export default function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between border-t-2 border-t-brandNeon" data-tilt data-tilt-max="8">
-          <div className="card-depth-content">
+        <div className="p-6 rounded-2xl flex flex-col justify-between border border-white/10 border-t-2 border-t-brandNeon bg-white/[0.03]">
+          <div>
             <div className="flex items-center justify-between text-[11px] font-mono text-brandNeon mb-4">
               <span>BENCHMARK 01</span>
               <span className="px-2 py-0.5 rounded bg-brandNeon/10 border border-brandNeon/30">RUNTIME GUARD</span>
@@ -1549,14 +1531,14 @@ export default function HomePage() {
               <div className="flex justify-between"><span>Schema Drift:</span> <strong className="text-brandGreen">0.00% Defect</strong></div>
             </div>
           </div>
-          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400 card-depth-content">
+          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400">
             <span>HARNESS: AST VERIFIED</span>
             <span className="text-brandNeon">48H SPRINT</span>
           </div>
         </div>
 
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between border-t-2 border-t-purple-400" data-tilt data-tilt-max="8">
-          <div className="card-depth-content">
+        <div className="p-6 rounded-2xl flex flex-col justify-between border border-white/10 border-t-2 border-t-purple-400 bg-white/[0.03]">
+          <div>
             <div className="flex items-center justify-between text-[11px] font-mono text-purple-300 mb-4">
               <span>BENCHMARK 02</span>
               <span className="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-400/40">ADVERSARIAL FUZZ</span>
@@ -1571,14 +1553,14 @@ export default function HomePage() {
               <div className="flex justify-between"><span>Token Leakage:</span> <strong className="text-brandGreen">0 Leaks Committed</strong></div>
             </div>
           </div>
-          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400 card-depth-content">
+          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400">
             <span>AUDIT: SOC2 ALIGNED</span>
             <span className="text-purple-300">5-DAY HARNESS</span>
           </div>
         </div>
 
-        <div className="glass-3d-card p-6 rounded-2xl flex flex-col justify-between border-t-2 border-t-cyan-400" data-tilt data-tilt-max="8">
-          <div className="card-depth-content">
+        <div className="p-6 rounded-2xl flex flex-col justify-between border border-white/10 border-t-2 border-t-cyan-400 bg-white/[0.03]">
+          <div>
             <div className="flex items-center justify-between text-[11px] font-mono text-cyan-300 mb-4">
               <span>BENCHMARK 03</span>
               <span className="px-2 py-0.5 rounded bg-cyan-400/15 border border-cyan-400/30">ETL COMPRESSION</span>
@@ -1593,7 +1575,7 @@ export default function HomePage() {
               <div className="flex justify-between"><span>Query Refresh:</span> <strong className="text-brandGreen">Sub-second P95</strong></div>
             </div>
           </div>
-          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400 card-depth-content">
+          <div className="border-t border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-mono text-gray-400">
             <span>STATUS: TELEMETRY ACTIVE</span>
             <span className="text-cyan-300">48H SPRINT</span>
           </div>
@@ -1601,7 +1583,6 @@ export default function HomePage() {
       </div>
     </div>
   </section>
-
 
   <section id="results" className="py-20 bg-brandMint text-black shadow-2xl relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1635,10 +1616,9 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="roi-calculator" className="py-20 relative z-10 bg-[#01141b]/80 border-b border-white/10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="glass-3d-card rounded-3xl p-6 sm:p-10 border border-brandNeon/25">
+      <div className="rounded-3xl p-6 sm:p-10 border border-brandNeon/25 bg-white/[0.02]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-7 space-y-6">
             <div>
@@ -1723,7 +1703,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="pricing" className="py-24 relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-12">
@@ -1732,14 +1711,14 @@ export default function HomePage() {
         <p className="text-gray-300 text-sm">Transparent USD pricing with zero surprise fees and zero sales calls. Initialize instant staging ingress or deploy via Razorpay.</p>
       </div>
 
-
+      {/* Traditional Agency vs. Nexalytics AI Comparison */}
       <div className="mb-12 rounded-2xl border border-white/15 bg-[#021922]/90 overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="border-b border-white/10 bg-white/5 font-mono text-xs uppercase tracking-wider">
               <th className="p-4 text-slate-300">Dimension</th>
               <th className="p-4 text-slate-400">Traditional Agency</th>
-              <th className="p-4 text-brandNeon">Nexalytics AI (Async Sprints)</th>
+              <th className="p-4 text-brandNeon">Nexalytics AI (Autonomous + Async)</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10 text-slate-200">
@@ -1767,7 +1746,6 @@ export default function HomePage() {
         </table>
       </div>
 
-
       <div className="mb-10 rounded-2xl p-5 bg-[#02242e] border border-brandNeon/40 shadow-[0_0_30px_rgba(0,255,170,0.1)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h3 className="text-sm sm:text-base font-bold text-white">🛡 Not ready to pay upfront? Start with a Complimentary 24h Staging Benchmark ($0)</h3>
@@ -1779,9 +1757,8 @@ export default function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <div className="glass-3d-card p-6 rounded-3xl flex flex-col justify-between" data-tilt data-tilt-max="10">
-          <div className="card-depth-content">
+        <div className="p-6 rounded-3xl flex flex-col justify-between bg-white/[0.03] border border-white/10" data-tilt data-tilt-max="6">
+          <div>
             <h3 className="text-lg font-bold mb-2 text-white">Autonomous Data Analytics Sprint</h3>
             <p className="text-xs text-gray-300 mb-6">48-Hour Turnaround | Executive BI Dashboard | Cohort Analysis</p>
             <div className="text-3xl font-black mb-1 text-white">$499 <span className="text-xs font-normal text-brandNeon font-mono">USD</span></div>
@@ -1793,7 +1770,7 @@ export default function HomePage() {
               <li className="flex items-center gap-2"><span className="text-brandGreen">✓</span> Full source files & SQL schemas</li>
             </ul>
           </div>
-          <div className="space-y-2 card-depth-content">
+          <div className="space-y-2">
             <button onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('Autonomous Data Analytics ($499)')"); }} className="w-full text-center bg-brandGreen hover:bg-brandGreenHover text-black font-extrabold py-3.5 rounded-full transition text-xs shadow-[0_0_20px_rgba(0,184,112,0.35)] hover:scale-105 active:scale-95 cursor-pointer">
               Initialize Ingress ($499) ⚡
             </button>
@@ -1808,10 +1785,9 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-6 rounded-3xl flex flex-col justify-between border-2 border-brandOrange bg-[#064d60]/40 shadow-[0_0_40px_rgba(255,89,0,0.25)]" data-tilt data-tilt-max="12">
+        <div className="relative p-6 rounded-3xl flex flex-col justify-between border-2 border-brandOrange bg-[#064d60]/40 shadow-[0_0_40px_rgba(255,89,0,0.25)]" data-tilt data-tilt-max="6">
           <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brandOrange text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</span>
-          <div className="card-depth-content">
+          <div>
             <h3 className="text-lg font-bold mb-2 text-white">Generative UI/UX System</h3>
             <p className="text-xs text-gray-300 mb-6">72-Hour Delivery | 10 High-Fidelity Screens | Design Tokens</p>
             <div className="text-3xl font-black mb-1 text-white">$999 <span className="text-xs font-normal text-brandOrange font-mono">USD</span></div>
@@ -1823,7 +1799,7 @@ export default function HomePage() {
               <li className="flex items-center gap-2"><span className="text-brandOrange">✓</span> 24/7 AI concierge integration</li>
             </ul>
           </div>
-          <div className="space-y-2 card-depth-content">
+          <div className="space-y-2">
             <button onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('Generative UI/UX System ($999)')"); }} className="w-full text-center bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold py-3.5 rounded-full transition text-xs shadow-[0_0_28px_rgba(255,89,0,0.5)] hover:scale-105 active:scale-95 cursor-pointer">
               Initialize Ingress ($999) ⚡
             </button>
@@ -1838,10 +1814,9 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-6 rounded-3xl flex flex-col justify-between border border-purple-400/40 bg-[#064d60]/30 shadow-[0_0_35px_rgba(168,85,247,0.2)]" data-tilt data-tilt-max="10">
+        <div className="relative p-6 rounded-3xl flex flex-col justify-between border border-purple-400/40 bg-[#064d60]/30 shadow-[0_0_35px_rgba(168,85,247,0.2)]" data-tilt data-tilt-max="6">
           <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Security & Audit</span>
-          <div className="card-depth-content">
+          <div>
             <h3 className="text-lg font-bold mb-2 text-white">AI Agent Evaluation Suite</h3>
             <p className="text-xs text-gray-300 mb-6">5-Day Sprint | 1,000+ Edge Fuzzing | Drift Benchmarks</p>
             <div className="text-3xl font-black mb-1 text-white">$1,499 <span className="text-xs font-normal text-purple-300 font-mono">USD</span></div>
@@ -1853,7 +1828,7 @@ export default function HomePage() {
               <li className="flex items-center gap-2"><span className="text-purple-400">✓</span> Telemetry dashboard & hardened repo</li>
             </ul>
           </div>
-          <div className="space-y-2 card-depth-content">
+          <div className="space-y-2">
             <button onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('AI Agent Evaluation Suite ($1,499)')"); }} className="w-full text-center bg-purple-500 hover:bg-purple-600 text-white font-extrabold py-3.5 rounded-full transition text-xs shadow-[0_0_20px_rgba(168,85,247,0.45)] hover:scale-105 active:scale-95 cursor-pointer">
               Deploy Audit ($1,499) ⚡
             </button>
@@ -1868,9 +1843,8 @@ export default function HomePage() {
           </div>
         </div>
 
-
-        <div className="glass-3d-card p-6 rounded-3xl flex flex-col justify-between" data-tilt data-tilt-max="10">
-          <div className="card-depth-content">
+        <div className="p-6 rounded-3xl flex flex-col justify-between bg-white/[0.03] border border-white/10" data-tilt data-tilt-max="6">
+          <div>
             <h3 className="text-lg font-bold mb-2 text-white">Full-Stack AI MVP</h3>
             <p className="text-xs text-gray-300 mb-6">7-Day Sprint | Production Next.js App | DB Integration</p>
             <div className="text-3xl font-black mb-1 text-white">$1,999 <span className="text-xs font-normal text-brandNeon font-mono">USD</span></div>
@@ -1882,7 +1856,7 @@ export default function HomePage() {
               <li className="flex items-center gap-2"><span className="text-brandGreen">✓</span> Automated QA & Cloud deploy</li>
             </ul>
           </div>
-          <div className="space-y-2 card-depth-content">
+          <div className="space-y-2">
             <button onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('Full-Stack AI MVP ($1,999)')"); }} className="w-full text-center bg-brandGreen hover:bg-brandGreenHover text-black font-extrabold py-3.5 rounded-full transition text-xs shadow-[0_0_20px_rgba(0,184,112,0.35)] hover:scale-105 active:scale-95 cursor-pointer">
               Deploy Build ($1,999) ⚡
             </button>
@@ -1900,7 +1874,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="about" className="py-24 relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -1914,9 +1887,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="glass-3d-card p-8 rounded-3xl border border-white/15 flex flex-col sm:flex-row items-center gap-6 shadow-[0_0_40px_rgba(0,0,0,0.6)]" data-tilt data-tilt-max="8">
-          <img src="https://rjdavx8ozyznxeyh.public.blob.vercel-storage.com/production/websites/uploaded-media/supawork-image-20241204T060514212Z-GGa9V05Obf6N0Qerc33qjiVrY3GwCF.png" alt="Deepak Kumar" className="w-32 h-32 rounded-full object-cover object-top border-2 border-brandNeon shadow-[0_0_30px_rgba(0,255,170,0.5)] card-depth-content shrink-0" />
-          <div className="card-depth-content space-y-2.5 text-center sm:text-left">
+        <div className="p-8 rounded-3xl border border-white/15 bg-white/[0.03] flex flex-col sm:flex-row items-center gap-6 shadow-[0_0_40px_rgba(0,0,0,0.6)]" data-tilt data-tilt-max="6">
+          <img src="https://rjdavx8ozyznxeyh.public.blob.vercel-storage.com/production/websites/uploaded-media/supawork-image-20241204T060514212Z-GGa9V05Obf6N0Qerc33qjiVrY3GwCF.png" alt="Deepak Kumar" className="w-32 h-32 rounded-full object-cover object-top border-2 border-brandNeon shadow-[0_0_30px_rgba(0,255,170,0.5)] shrink-0" />
+          <div className="space-y-2.5 text-center sm:text-left">
             <div>
               <h3 className="text-xl font-bold text-white">Deepak Kumar</h3>
               <p className="text-brandNeon text-xs font-mono">Founder & Principal Systems Architect</p>
@@ -1937,7 +1910,6 @@ export default function HomePage() {
       </div>
     </div>
   </section>
-
 
   <section className="py-16 relative z-10 bg-[#021016]/80 border-t border-white/10">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1970,7 +1942,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="architecture-brief" className="py-16 relative z-10 bg-[#011820]/90 border-t border-white/10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       <div className="max-w-3xl">
@@ -1996,7 +1967,6 @@ export default function HomePage() {
       </div>
     </div>
   </section>
-
 
   <section id="faq" className="py-20 bg-brandMint text-black relative z-10 shadow-2xl scroll-mt-20">
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2030,7 +2000,6 @@ export default function HomePage() {
     </div>
   </section>
 
-
   <section id="inquiry" className="py-24 relative z-10 scroll-mt-20">
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       <div className="text-center space-y-3">
@@ -2048,8 +2017,7 @@ export default function HomePage() {
         </div>
       </div>
 
-
-      <div id="contactTicketReceipt" className="hidden glass-3d-card p-8 sm:p-10 rounded-3xl border border-brandNeon/45 space-y-6">
+      <div id="contactTicketReceipt" className="hidden p-8 sm:p-10 rounded-3xl border border-brandNeon/45 bg-white/[0.03] space-y-6">
         <div>
           <div id="contactReceiptId" className="text-xs font-mono text-brandNeon font-bold">✓ Async Ticket Dispatched</div>
           <h3 className="text-2xl font-extrabold text-white mt-1">Your Technical Specs Are Queued</h3>
@@ -2062,23 +2030,22 @@ export default function HomePage() {
         </div>
       </div>
 
-
-      <form id="clientInquiryForm" onSubmit={(e) => { (window as any).handleSubmitExpr?.(e, 'handleContactSubmit(event)'); }} noValidate className="glass-3d-card p-8 sm:p-10 space-y-6 rounded-3xl border border-white/20 shadow-2xl relative">
+      <form id="clientInquiryForm" onSubmit={(e) => { (window as any).handleSubmitExpr?.(e, 'handleContactSubmit(event)'); }} noValidate className="p-8 sm:p-10 space-y-6 rounded-3xl border border-white/20 bg-white/[0.03] shadow-2xl relative">
         <input type="text" id="contactHoney" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" />
 
         <div id="contactErrorBox" className="hidden p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-200 text-xs font-mono"></div>
 
-        <div className="card-depth-content">
+        <div>
           <label htmlFor="inquiryName" className="block text-xs font-mono uppercase text-gray-300 mb-2">Full name *</label>
           <input id="inquiryName" type="text" required placeholder="Your full name" className="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm" />
         </div>
 
-        <div className="card-depth-content">
+        <div>
           <label htmlFor="inquiryEmail" className="block text-xs font-mono uppercase text-gray-300 mb-2">Work email (Primary Async Channel) *</label>
           <input id="inquiryEmail" type="email" required placeholder="name@company.com" className="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 card-depth-content">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="inquiryContact" className="block text-xs font-mono uppercase text-gray-300 mb-2">Slack / Async Handle (Optional)</label>
             <input id="inquiryContact" type="text" placeholder="Optional · Async delivery only (no calls)" className="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm" />
@@ -2089,7 +2056,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="card-depth-content">
+        <div>
           <label htmlFor="serviceSelectDropdown" className="block text-xs font-mono uppercase text-gray-300 mb-2">Which sprint do you need? *</label>
           <select id="serviceSelectDropdown" onChange={(e) => { const val = (e.target as any).value; (window as any).syncTimelineWithService?.(val); }} required className="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm">
             <option value="Autonomous Data Analytics ($499)">Autonomous Data Analytics ($499)</option>
@@ -2101,7 +2068,7 @@ export default function HomePage() {
           </select>
         </div>
 
-        <div className="card-depth-content">
+        <div>
           <span className="block text-xs font-mono uppercase text-gray-300 mb-3">Target delivery window *</span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-gray-200">
             <label className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:border-brandNeon/50 transition">
@@ -2123,19 +2090,18 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="card-depth-content">
+        <div>
           <label htmlFor="inquiryDetails" className="block text-xs font-mono uppercase text-gray-300 mb-2">Technical requirements or bottleneck details *</label>
           <textarea id="inquiryDetails" rows={4} required placeholder="Share your data sources, current pipeline bottleneck, agent endpoints, or staging requirements..." className="w-full bg-[#02242e] border border-white/20 p-3.5 text-white rounded-xl focus:border-brandNeon outline-none text-sm"></textarea>
         </div>
 
-        <button id="submitBtn" type="submit" className="w-full bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold py-4 rounded-full uppercase tracking-wider transition text-sm shadow-[0_0_25px_rgba(255,89,0,0.45)] hover:scale-[1.01] active:scale-95 card-depth-content flex items-center justify-center gap-2 cursor-pointer">
+        <button id="submitBtn" type="submit" className="w-full bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold py-4 rounded-full uppercase tracking-wider transition text-sm shadow-[0_0_25px_rgba(255,89,0,0.45)] hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
           <span>Initialize Sandbox Pipeline (Zero-Call Async) →</span>
         </button>
         <p className="text-center text-[11px] font-mono text-slate-400">🛡 100% Async Delivery · Sanitized Schemas Only (No Raw PII/Secrets) · Zero Calls</p>
       </form>
     </div>
   </section>
-
 
   <footer className="bg-[#01141b] text-gray-400 relative z-20 border-t border-white/10">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -2173,10 +2139,7 @@ export default function HomePage() {
           <li>
             <button
               type="button"
-              onClick={() => {
-                document.getElementById("privacyModal")?.classList.remove("hidden");
-                document.body.style.overflow = "hidden";
-              }}
+              onClick={() => openLegalModal("privacyModal")}
               className="hover:text-brandNeon transition text-left cursor-pointer"
             >
               Privacy Policy
@@ -2185,10 +2148,7 @@ export default function HomePage() {
           <li>
             <button
               type="button"
-              onClick={() => {
-                document.getElementById("termsModal")?.classList.remove("hidden");
-                document.body.style.overflow = "hidden";
-              }}
+              onClick={() => openLegalModal("termsModal")}
               className="hover:text-brandNeon transition text-left cursor-pointer"
             >
               Terms of Service
@@ -2204,10 +2164,7 @@ export default function HomePage() {
         <div className="flex items-center gap-4 text-xs text-gray-400">
           <button
             type="button"
-            onClick={() => {
-              document.getElementById("privacyModal")?.classList.remove("hidden");
-              document.body.style.overflow = "hidden";
-            }}
+            onClick={() => openLegalModal("privacyModal")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             Privacy Policy
@@ -2215,10 +2172,7 @@ export default function HomePage() {
           <span>•</span>
           <button
             type="button"
-            onClick={() => {
-              document.getElementById("termsModal")?.classList.remove("hidden");
-              document.body.style.overflow = "hidden";
-            }}
+            onClick={() => openLegalModal("termsModal")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             Terms of Service
@@ -2226,10 +2180,7 @@ export default function HomePage() {
           <span>•</span>
           <button
             type="button"
-            onClick={() => {
-              document.getElementById("dataDeletionModal")?.classList.remove("hidden");
-              document.body.style.overflow = "hidden";
-            }}
+            onClick={() => openLegalModal("dataDeletionModal")}
             className="hover:text-brandNeon transition cursor-pointer"
           >
             User Data Deletion
@@ -2239,9 +2190,8 @@ export default function HomePage() {
     </div>
   </footer>
 
-
   <div id="ingressModal" onClick={(e) => { (window as any).handleClickExpr?.(e, 'if(event.target===this) closeIngressModal()'); }} className="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div className="glass-3d-card bg-[#02242e]/98 border-2 border-brandNeon/50 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 text-gray-200 text-sm shadow-[0_0_50px_rgba(0,255,170,0.25)]">
+    <div className="bg-[#02242e]/98 border-2 border-brandNeon/50 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 text-gray-200 text-sm shadow-[0_0_50px_rgba(0,255,170,0.25)]">
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <span className="text-[10px] font-mono text-brandNeon uppercase tracking-widest font-bold">Self-Serve Async Ingress Protocol</span>
@@ -2274,18 +2224,14 @@ export default function HomePage() {
     </div>
   </div>
 
-
   <div
     id="privacyModal"
     onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        document.getElementById("privacyModal")?.classList.add("hidden");
-        document.body.style.overflow = "";
-      }
+      if (e.target === e.currentTarget) closeLegalModal("privacyModal");
     }}
     className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
   >
-    <div className="glass-3d-card bg-[#02242e]/95 border border-brandNeon/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
+    <div className="bg-[#02242e]/95 border border-brandNeon/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <span className="text-[10px] font-mono text-brandNeon uppercase tracking-widest">Legal Governance</span>
@@ -2293,10 +2239,7 @@ export default function HomePage() {
         </div>
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("privacyModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("privacyModal")}
           className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
         >
           ✕
@@ -2312,10 +2255,7 @@ export default function HomePage() {
       <div className="pt-4 border-t border-white/10 flex justify-end">
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("privacyModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("privacyModal")}
           className="px-5 py-2 rounded-full bg-brandNeon text-black font-bold font-mono text-xs cursor-pointer"
         >
           Close
@@ -2327,14 +2267,11 @@ export default function HomePage() {
   <div
     id="termsModal"
     onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        document.getElementById("termsModal")?.classList.add("hidden");
-        document.body.style.overflow = "";
-      }
+      if (e.target === e.currentTarget) closeLegalModal("termsModal");
     }}
     className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
   >
-    <div className="glass-3d-card bg-[#02242e]/95 border border-brandOrange/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
+    <div className="bg-[#02242e]/95 border border-brandOrange/30 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <span className="text-[10px] font-mono text-brandOrange uppercase tracking-widest">Legal Governance</span>
@@ -2342,10 +2279,7 @@ export default function HomePage() {
         </div>
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("termsModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("termsModal")}
           className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
         >
           ✕
@@ -2360,10 +2294,7 @@ export default function HomePage() {
       <div className="pt-4 border-t border-white/10 flex justify-end">
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("termsModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("termsModal")}
           className="px-5 py-2 rounded-full bg-brandOrange text-black font-bold font-mono text-xs cursor-pointer"
         >
           Close
@@ -2375,14 +2306,11 @@ export default function HomePage() {
   <div
     id="dataDeletionModal"
     onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        document.getElementById("dataDeletionModal")?.classList.add("hidden");
-        document.body.style.overflow = "";
-      }
+      if (e.target === e.currentTarget) closeLegalModal("dataDeletionModal");
     }}
     className="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
   >
-    <div className="glass-3d-card bg-[#02242e]/95 border border-brandCyan/30 rounded-3xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
+    <div className="bg-[#02242e]/95 border border-brandCyan/30 rounded-3xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-5 text-gray-300 text-xs sm:text-sm shadow-2xl">
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <span className="text-[10px] font-mono text-brandCyan uppercase tracking-widest">Compliance & User Rights</span>
@@ -2390,10 +2318,7 @@ export default function HomePage() {
         </div>
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("dataDeletionModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("dataDeletionModal")}
           className="text-gray-400 hover:text-white text-2xl font-bold p-1 cursor-pointer"
         >
           ✕
@@ -2405,10 +2330,7 @@ export default function HomePage() {
       <div className="pt-4 border-t border-white/10 flex justify-end">
         <button
           type="button"
-          onClick={() => {
-            document.getElementById("dataDeletionModal")?.classList.add("hidden");
-            document.body.style.overflow = "";
-          }}
+          onClick={() => closeLegalModal("dataDeletionModal")}
           className="px-5 py-2 rounded-full bg-brandCyan text-black font-bold font-mono text-xs cursor-pointer"
         >
           Close
@@ -2416,7 +2338,6 @@ export default function HomePage() {
       </div>
     </div>
   </div>
-
 
   <button id="backToTopBtn" onClick={(e) => { (window as any).handleClickExpr?.(e, "window.scrollTo({top: 0, behavior: 'smooth'})"); }}
           aria-label="Back to Top"
