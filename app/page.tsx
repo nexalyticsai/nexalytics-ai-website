@@ -319,10 +319,11 @@ export default function HomePage() {
         btn.disabled = true;
       }
 
+      const verdictLabel = lastAuditReceipt ? String(lastAuditReceipt.verdict || activeSandboxPreset) : activeSandboxPreset;
       const ticket = {
         ticketId: makeTicketId(),
         tier: "Complimentary 24h Staging Benchmark",
-        repoOrUrl: `Sandbox Test (${lastAuditReceipt ? lastAuditReceipt.verdict : activeSandboxPreset})`,
+        repoOrUrl: `Sandbox Test (${verdictLabel})`,
         email,
         status: "ARCHITECT_REVIEW"
       };
@@ -362,6 +363,10 @@ export default function HomePage() {
       if (confEl) {
         confEl.classList.remove("hidden");
         confEl.classList.add("flex");
+      }
+      if (btn) {
+        btn.innerText = "✉ Email Audit Receipt";
+        btn.disabled = false;
       }
     };
 
@@ -412,8 +417,12 @@ export default function HomePage() {
       if (recReason) recReason.innerText = pkg.reason;
       if (startBtn) {
         startBtn.innerText = `Start ${pkg.name} ⚡`;
-        startBtn.onclick = () => w.openIngressModal(pkg.name);
       }
+    };
+
+    w.startRecommendedRoiSprint = () => {
+      const pkg = ROI_PACKAGES[roiFocus] || ROI_PACKAGES.evaluation;
+      w.openIngressModal(pkg.name);
     };
 
     w.setRoiFocus = (key: string) => {
@@ -1686,7 +1695,7 @@ export default function HomePage() {
           <div className="lg:col-span-5 bg-[#02141a] border border-white/15 rounded-2xl p-6 space-y-5">
             <div className="border-b border-white/10 pb-4">
               <div className="text-xs font-mono text-slate-400">Estimated Monthly Burn Without Guardrails</div>
-              <div id="roiMonthlyLeak" className="text-3xl sm:text-4xl font-black text-brandOrange mt-1">$5,830 <span class="text-sm font-mono text-slate-300">/ mo</span></div>
+              <div id="roiMonthlyLeak" className="text-3xl sm:text-4xl font-black text-brandOrange mt-1">$5,830 <span className="text-sm font-mono text-slate-300">/ mo</span></div>
               <div id="roiBreakdown" className="text-xs font-mono text-slate-400 mt-1">Eng time reclaimed: 44 hrs/month · Retry waste: $113</div>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
@@ -1704,7 +1713,7 @@ export default function HomePage() {
               <p id="roiRecommendedReason" className="text-xs text-slate-200 leading-relaxed">Stops prompt injection, schema drift, and silent LLM retry loops before production.</p>
             </div>
             <div className="space-y-2.5">
-              <button type="button" id="roiStartBtn" onClick={(e) => { (window as any).handleClickExpr?.(e, "openIngressModal('AI Agent Evaluation Suite ($1,499)')"); }} className="w-full py-3.5 px-5 rounded-full bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold text-xs sm:text-sm transition hover:scale-[1.01] cursor-pointer">
+              <button type="button" id="roiStartBtn" onClick={(e) => { (window as any).handleClickExpr?.(e, "startRecommendedRoiSprint()"); }} className="w-full py-3.5 px-5 rounded-full bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold text-xs sm:text-sm transition hover:scale-[1.01] cursor-pointer">
                 Start AI Agent Evaluation Suite ($1,499) ⚡
               </button>
               <button type="button" onClick={(e) => { (window as any).handleClickExpr?.(e, "selectSprintOption('Complimentary 24h Staging Benchmark')"); }} className="w-full py-2.5 px-4 rounded-full bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 font-mono text-xs transition cursor-pointer">
