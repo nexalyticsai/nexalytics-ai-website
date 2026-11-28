@@ -2,8 +2,93 @@
 
 import { useEffect, useState } from "react";
 
+const CASE_STUDY_ITEMS = [
+  {
+    id: "case-data-499",
+    tierBadge: "$499 • 48-Hr Async Sprint",
+    serviceName: "Autonomous Data Analytics",
+    title: "Eliminating $22K/Mo Silent Ledger Drift in B2B Billing",
+    targetB2B: "B2B SaaS, FinOps & Multi-Branch ERP Operations",
+    videoSrc: "/videos/01_data_analytics_499.mp4",
+    problem:
+      "Dashboards showed green row counts, yet ERP exports, payment webhooks, and SQL tables had a 5.8% month-end reconciliation mismatch (~$22K/mo unattributed) from duplicate retries and drifted fields.",
+    howSolved:
+      "Deployed a zero-trust staging schema gate, composite idempotency keys, and an automated variance assertion—with full repo handover and zero calls.",
+    metrics: [
+      { label: "Ledger Variance", before: "5.8% (~$22K/mo)", after: "0.00% Verified" },
+      { label: "Manual Ops Cleanup", before: "12 hrs / week", after: "0 hrs Automated" },
+      { label: "Delivery Model", before: "Retainer / Calls", after: "48-Hr Async Repo" },
+    ],
+    sprintSelectValue: "Autonomous Data Analytics ($499)",
+    takeaway: "Zero production DB lock-in • Full repository handover",
+  },
+  {
+    id: "case-ml-999",
+    tierBadge: "$999 • 3-Day Async Sprint",
+    serviceName: "Generative UI/UX & Predictive Workflow",
+    title: "34-Day Early B2B Account Churn & Risk Detection Engine",
+    targetB2B: "Subscription SaaS, B2B Marketplaces & Risk Teams",
+    videoSrc: "/videos/02_applied_ml_999.mp4",
+    problem:
+      "Enterprise and SMB accounts contracted silently—teams only noticed when renewals failed, losing 11% ARR to reactive follow-ups.",
+    howSolved:
+      "Built a leakage-free behavioral feature pipeline and a calibrated scoring service (<45ms CPU inference) sending exact triggers into existing workflows.",
+    metrics: [
+      { label: "Churn Lead Time", before: "0d (Post-loss)", after: "34 Days Early" },
+      { label: "Renewal Recovery", before: "Reactive Baseline", after: "+28% Lift" },
+      { label: "Inference Speed", before: "Heavy Black-Box", after: "<45ms CPU" },
+    ],
+    sprintSelectValue: "Generative UI/UX System ($999)",
+    takeaway: "Explainable triggers • No mandatory GPU bloat",
+  },
+  {
+    id: "case-guardrails-1499",
+    tierBadge: "$1,499 • 5-Day Async Sprint",
+    serviceName: "AI Agent Evaluation Suite",
+    title: "Cutting Silent AI Tool-Call Failures by 97.8% in Production",
+    targetB2B: "Agentic AI Startups, Hiring/Screening & Workflow Tech",
+    videoSrc: "/videos/03_ai_guardrails_1499.mp4",
+    problem:
+      "Multi-turn AI agents returned HTTP 200 OK while malformed JSON arguments and drifted enum values silently corrupted downstream records.",
+    howSolved:
+      "Added deterministic schema/AST interception before tool execution, a bounded self-correction loop, and a 150-case CI evaluation harness.",
+    metrics: [
+      { label: "Silent Failures", before: "14.0% in Prod", after: "0.3% (-97.8%)" },
+      { label: "Corrupted Writes", before: "~90 rows / week", after: "0 at Gate" },
+      { label: "Prompt QA Cycle", before: "2 Days Manual", after: "4 Mins CI Suite" },
+    ],
+    sprintSelectValue: "AI Agent Evaluation Suite ($1,499)",
+    takeaway: "Deterministic boundary enforcement • CI regression suite",
+  },
+  {
+    id: "case-mvp-1999",
+    tierBadge: "$1,999 • 7-Day Async Sprint",
+    serviceName: "Full-Stack AI MVP",
+    title: "From Manual Compliance Spreadsheets to B2B AI Portal in 7 Days",
+    targetB2B: "Seed/Series-A Founders, B2B Consultancies & Ops Teams",
+    videoSrc: "/videos/04_fullstack_mvp_1999.mp4",
+    problem:
+      "Vendor compliance reviews took 4.5 days across scattered PDFs and spreadsheets, while traditional agencies quoted months and retainers.",
+    howSolved:
+      "Shipped an isolated multi-tenant data layer, confidence-gated document extraction, and a clean operator portal in 7 async days with full code ownership.",
+    metrics: [
+      { label: "Audit Turnaround", before: "4.5 Days / Case", after: "18 Minutes" },
+      { label: "Launch Speed", before: "3+ Mos Agency", after: "7 Async Days" },
+      { label: "IP Ownership", before: "Vendor Lock-In", after: "100% Client Repo" },
+    ],
+    sprintSelectValue: "Full-Stack AI MVP ($1,999)",
+    takeaway: "100% async delivery • Zero retainers • Full IP handover",
+  },
+];
+
 export default function HomePage() {
   const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | "deletion" | null>(null);
+  const [selectedCaseFilter, setSelectedCaseFilter] = useState<string>("all");
+
+  const visibleCaseStudies =
+    selectedCaseFilter === "all"
+      ? CASE_STUDY_ITEMS
+      : CASE_STUDY_ITEMS.filter((item) => item.id === selectedCaseFilter);
 
   useEffect(() => {
     if (!activeLegalModal) return;
@@ -518,7 +603,7 @@ export default function HomePage() {
           email,
           contact_handle: "Self-Serve Pricing Modal",
           repo_or_url: repo,
-          service_tier: activeIngressTier,
+          service_tier: ticket.tier,
           delivery_timeline: "Autonomous Sprint",
           project_details: "Initialized via Self-Serve Pricing Ingress Modal",
           status: ticket.status
@@ -904,6 +989,7 @@ export default function HomePage() {
           <span className="text-[8px] font-mono px-1 py-0.5 rounded bg-brandOrange/20 text-brandOrange">DEMO</span>
         </a>
         <a href="#benchmarks" className="text-gray-300 hover:text-brandNeon transition">Benchmarks</a>
+        <a href="#case-studies" className="text-gray-300 hover:text-brandNeon transition">Case Studies</a>
         <a href="#roi-calculator" className="text-gray-300 hover:text-brandNeon transition">ROI Calc</a>
         <a href="#pricing" className="text-gray-300 hover:text-brandNeon transition">Pricing</a>
         <a href="#faq" className="text-gray-300 hover:text-brandNeon transition">FAQ</a>
@@ -945,6 +1031,7 @@ export default function HomePage() {
         <a href="#services" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Capabilities</a>
         <a href="#specs" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Specs LIVE</a>
         <a href="#benchmarks" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Benchmarks</a>
+        <a href="#case-studies" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Case Studies</a>
         <a href="#roi-calculator" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">ROI Calculator</a>
         <a href="#pricing" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Pricing</a>
         <a href="#about" onClick={(e) => { (window as any).handleClickExpr?.(e, 'toggleMobileMenu(false)'); }} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-brandNeon">Founder & Protocol</a>
@@ -1607,6 +1694,121 @@ export default function HomePage() {
     </div>
   </section>
 
+  <section id="case-studies" className="py-24 relative z-10 bg-[#01141b]/90 border-t border-white/10 scroll-mt-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <span className="text-xs font-mono text-brandNeon uppercase tracking-widest">Case Studies &amp; Architecture Walkthroughs</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold mt-2 text-white">How B2B Bottlenecks Get Solved Async</h2>
+          <p className="text-gray-300 text-sm mt-2 max-w-2xl">
+            IP-safe architecture logs and video walkthroughs showing how each sprint resolves real B2B bottlenecks without exposing internal logic or requiring calls.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2 font-mono text-xs">
+          <button
+            type="button"
+            onClick={() => setSelectedCaseFilter("all")}
+            className={`px-3.5 py-2 rounded-xl border transition cursor-pointer ${
+              selectedCaseFilter === "all"
+                ? "bg-brandNeon text-black border-brandNeon font-bold"
+                : "bg-white/5 text-slate-200 border-white/15 hover:border-brandNeon/50"
+            }`}
+          >
+            All 4 Sprints
+          </button>
+          {CASE_STUDY_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setSelectedCaseFilter(item.id)}
+              className={`px-3.5 py-2 rounded-xl border transition cursor-pointer ${
+                selectedCaseFilter === item.id
+                  ? "bg-brandNeon text-black border-brandNeon font-bold"
+                  : "bg-white/5 text-slate-200 border-white/15 hover:border-brandNeon/50"
+              }`}
+            >
+              {item.tierBadge.split("•")[0].trim()}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {visibleCaseStudies.map((study) => (
+          <article
+            key={study.id}
+            className="rounded-3xl border border-white/15 bg-white/[0.03] p-6 flex flex-col justify-between shadow-xl"
+          >
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="px-3 py-1 rounded-full bg-brandNeon/10 border border-brandNeon/35 text-brandNeon text-[11px] font-mono font-bold">
+                  {study.tierBadge}
+                </span>
+                <span className="text-xs font-mono text-slate-400">{study.serviceName}</span>
+              </div>
+
+              <h3 className="text-xl font-bold text-white leading-snug">{study.title}</h3>
+              <p className="text-xs font-mono text-slate-400 mt-1">
+                B2B Fit: <span className="text-slate-200">{study.targetB2B}</span>
+              </p>
+
+              <div className="mt-4 rounded-2xl overflow-hidden border border-white/15 bg-[#000d12]">
+                <video
+                  src={study.videoSrc}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full aspect-video object-cover"
+                />
+              </div>
+
+              <div className="mt-5 space-y-3 text-xs sm:text-sm leading-relaxed">
+                <div className="rounded-xl bg-[#02141a] border border-white/10 p-3.5">
+                  <span className="font-mono font-bold text-rose-400">B2B Problem: </span>
+                  <span className="text-slate-200">{study.problem}</span>
+                </div>
+                <div className="rounded-xl bg-[#02141a] border border-white/10 p-3.5">
+                  <span className="font-mono font-bold text-brandNeon">How Solved (IP-Safe): </span>
+                  <span className="text-slate-200">{study.howSolved}</span>
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-3 gap-2.5 font-mono">
+                {study.metrics.map((m) => (
+                  <div
+                    key={m.label}
+                    className="rounded-xl bg-[#02141a] border border-white/10 p-2.5"
+                  >
+                    <div className="text-[10px] text-slate-400 truncate">{m.label}</div>
+                    <div className="text-[10px] text-rose-400/90 line-through mt-1">{m.before}</div>
+                    <div className="text-xs font-bold text-brandGreen mt-0.5">{m.after}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
+              <span className="text-slate-400">{study.takeaway}</span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  (window as any).handleClickExpr?.(
+                    e,
+                    `selectSprintOption('${study.sprintSelectValue}')`
+                  );
+                }}
+                className="px-4 py-2 rounded-full bg-brandOrange hover:bg-brandOrangeHover text-black font-extrabold transition shrink-0 cursor-pointer"
+              >
+                Start This Sprint →
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section id="results" className="py-20 bg-brandMint text-black shadow-2xl relative z-10 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
@@ -1695,7 +1897,7 @@ export default function HomePage() {
           <div className="lg:col-span-5 bg-[#02141a] border border-white/15 rounded-2xl p-6 space-y-5">
             <div className="border-b border-white/10 pb-4">
               <div className="text-xs font-mono text-slate-400">Estimated Monthly Burn Without Guardrails</div>
-              <div id="roiMonthlyLeak" className="text-3xl sm:text-4xl font-black text-brandOrange mt-1">$5,830 <span className="text-sm font-mono text-slate-300">/ mo</span></div>
+              <div id="roiMonthlyLeak" className="text-3xl sm:text-4xl font-black text-brandOrange mt-1">$5,830 <span class="text-sm font-mono text-slate-300">/ mo</span></div>
               <div id="roiBreakdown" className="text-xs font-mono text-slate-400 mt-1">Eng time reclaimed: 44 hrs/month · Retry waste: $113</div>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
@@ -2158,6 +2360,7 @@ export default function HomePage() {
           <li><a href="#services" className="hover:text-brandNeon transition">Capabilities & Sprints</a></li>
           <li><a href="#specs" className="hover:text-brandNeon transition">Systems Specs & Blueprints</a></li>
           <li><a href="#benchmarks" className="hover:text-brandNeon transition">Telemetry Benchmarks</a></li>
+          <li><a href="#case-studies" className="hover:text-brandNeon transition">Case Studies &amp; Videos</a></li>
           <li><a href="#pricing" className="hover:text-brandNeon transition">Pricing Packages</a></li>
           <li>
             <button
